@@ -43,7 +43,7 @@ public class CommentRepository {
 	}
 	
 	public void delete(Integer id){
-		String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = :id ;";
+		String sql = "DELETE FROM " + TABLE_NAME + " WHERE article_id = :id ;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		template.update(sql, param);
 	}
