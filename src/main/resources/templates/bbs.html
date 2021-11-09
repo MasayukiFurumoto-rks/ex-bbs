@@ -21,7 +21,7 @@
 					        <br th:if="${!stat.last}"/>
 					</th:block>
 		</div>
-		<a th:href="@{/ex-bbs/delete-article}+${article.id}"><button>記事削除</button></a>
+		<a th:href="@{/ex-bbs/delete-article?id=}+${article.id}"><button>記事削除</button></a>
 	<hr>
 	</div>
 </body>

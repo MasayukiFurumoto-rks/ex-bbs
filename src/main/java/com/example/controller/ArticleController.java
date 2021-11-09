@@ -47,4 +47,11 @@ public class ArticleController {
 		
 		return "redirect:/ex-bbs";
 	}
+	
+	@RequestMapping("/delete-article")
+	public String createArticle(Integer id) {
+		repository.delete(id);
+		
+		return "redirect:/ex-bbs";
+	}
 }
