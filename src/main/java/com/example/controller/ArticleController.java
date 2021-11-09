@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Article;
+import com.example.domain.Comment;
 import com.example.form.ArticleForm;
+import com.example.form.CommentForm;
 import com.example.repository.ArticleRepository;
 import com.example.repository.CommentRepository;
 
@@ -27,12 +29,14 @@ public class ArticleController {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	@Autowired
-	private ServletContext application;
+	@ModelAttribute
+	private ArticleForm setUpArticleForm() {
+		return new ArticleForm();
+	}
 	
 	@ModelAttribute
-	private ArticleForm setUpForm() {
-		return new ArticleForm();
+	private CommentForm setUpCommentForm() {
+		return new CommentForm();
 	}
 	
 	@RequestMapping("")
@@ -47,8 +51,8 @@ public class ArticleController {
 		return "bbs";
 	}
 	
-	@RequestMapping("/create-article")
-	public String createArticle(ArticleForm form) {
+	@RequestMapping("/insert-article")
+	public String insertArticle(ArticleForm form) {
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleRepository.insert(article);
@@ -57,9 +61,23 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/delete-article")
-	public String createArticle(Integer id) {
+	public String deleteArticle(Integer id) {
 		articleRepository.delete(id);
+		commentRepository.delete(id);
 		
 		return "redirect:/ex-bbs";
 	}
+	
+	@RequestMapping("/insert-comment")
+	public String insertComment(CommentForm form) {
+		Comment comment = new Comment();
+		BeanUtils.copyProperties(form, comment);
+		comment.setArticleId(form.getIntArticleId());
+		System.out.println(form);
+		
+		commentRepository.insert(comment);
+		
+		return "redirect:/ex-bbs";
+	}
+	
 }
