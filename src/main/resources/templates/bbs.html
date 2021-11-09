@@ -5,12 +5,13 @@
 <title>掲示板</title>
 </head>
 <body>
-
-	<form th:action="@{/ex-bbs/create-article}" th:object=${articleForm}>
-		投稿者名：<input type="text" th:field="*{name}"><br>
-		記事内容：<textarea rows="5" cols="30" th:field="*{content}"></textarea><br>
-		<button>記事投稿</button>
-	</form>
+	<div class="article-form">
+		<form th:action="@{/ex-bbs/create-article}" th:object=${articleForm}>
+			投稿者名：<input type="text" th:field="*{name}"><br>
+			記事内容：<textarea rows="5" cols="30" th:field="*{content}"></textarea><br>
+			<button>記事投稿</button>
+		</form>
+	</div>
 	<hr>
 	<div class="article" th:each="article:${articleList}">
 		<div class="article_name">
@@ -21,8 +22,30 @@
 					        <br th:if="${!stat.last}"/>
 					</th:block>
 		</div>
+		<br>
 		<a th:href="@{/ex-bbs/delete-article?id=}+${article.id}"><button>記事削除</button></a>
-	<hr>
+		<br>
+		<br>
+		<div class="comment" th:each="comment:${article.commentList}">
+			<div class="comment_name">
+				コメント者名：<span th:text="${comment.name}">モックコメント太郎</span>
+			</div>
+			<div class="comment_content">
+				コメント内容：<br>
+				<th:block th:if="${comment.content}" th:each="str, stat : ${article.content.split('\r\n|\r|\n', -1)}"><th:block th:text="${str}"/>
+				<br th:if="${!stat.last}"/>
+				</th:block>
+			</div>
+			<br>
+		</div>
 	</div>
+<!-- 	<div class="comment-form">	 -->
+<!-- 		<form th:action="@{/ex-bbs/create-comment}" th:object=${commentForm}> -->
+<!-- 			投稿者名：<input type="text" th:field="*{name}"><br> -->
+<!-- 			記事内容：<textarea rows="5" cols="30" th:field="*{content}"></textarea><br> -->
+<!-- 			<button>記事投稿</button> -->
+<!-- 		</form> -->
+<!-- 	</div>		 -->
+	<hr>
 </body>
 </html>

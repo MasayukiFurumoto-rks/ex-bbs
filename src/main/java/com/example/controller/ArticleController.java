@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.domain.Article;
 import com.example.form.ArticleForm;
 import com.example.repository.ArticleRepository;
+import com.example.repository.CommentRepository;
 
 
 @Controller
@@ -21,7 +22,10 @@ import com.example.repository.ArticleRepository;
 public class ArticleController {
 
 	@Autowired
-	private ArticleRepository repository;
+	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@Autowired
 	private ServletContext application;
@@ -33,7 +37,11 @@ public class ArticleController {
 	
 	@RequestMapping("")
 	public String index(Model model){
-		List<Article> articleList = repository.findAll();
+		List<Article> articleList = articleRepository.findAll();
+		//for分で全部取り出して、中にcommentListを詰めていく…？
+		for(Article article:articleList) {
+			article.setCommentList(commentRepository.findByArticleId(article.getId()));
+		}
 		model.addAttribute("articleList", articleList);
 		
 		return "bbs";
@@ -43,14 +51,14 @@ public class ArticleController {
 	public String createArticle(ArticleForm form) {
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
-		repository.insert(article);
+		articleRepository.insert(article);
 		
 		return "redirect:/ex-bbs";
 	}
 	
 	@RequestMapping("/delete-article")
 	public String createArticle(Integer id) {
-		repository.delete(id);
+		articleRepository.delete(id);
 		
 		return "redirect:/ex-bbs";
 	}
