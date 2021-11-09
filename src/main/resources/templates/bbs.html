@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>掲示板</title>
+</head>
+<body>
+
+	<form action="@{/ex-bbs/create-article}">
+		投稿者名：<input type="text"><br>
+		記事内容：<textarea rows="5" cols="30"></textarea><br>
+		<button>記事投稿</button>
+	</form>
+	<hr>
+	<div class="article" th:each="article:${articleList}">
+		<div class="article_name">
+			投稿者名：<span th:text="${article.name}">モック太郎</span>
+		</div>
+		<div class="article_content">
+			投稿内容：<th:block th:if="${article.content}" th:each="str, stat : ${article.content.split('\r\n|\r|\n', -1)}"><th:block th:text="${str}"/>
+					        <br th:if="${!stat.last}"/>
+					</th:block>
+		</div>
+		<a th:href="@{/ex-bbs/delete-article}+${article.id}"><button>記事削除</button></a>
+	<hr>
+	</div>
+</body>
+</html>
