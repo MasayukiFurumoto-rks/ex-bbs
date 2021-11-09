@@ -6,9 +6,9 @@
 </head>
 <body>
 
-	<form action="@{/ex-bbs/create-article}">
-		投稿者名：<input type="text"><br>
-		記事内容：<textarea rows="5" cols="30"></textarea><br>
+	<form th:action="@{/ex-bbs/create-article}" th:object=${articleForm}>
+		投稿者名：<input type="text" th:field="*{name}"><br>
+		記事内容：<textarea rows="5" cols="30" th:field="*{content}"></textarea><br>
 		<button>記事投稿</button>
 	</form>
 	<hr>
