@@ -1,9 +1,9 @@
 package com.example.form;
 
 public class CommentForm {
-	private String articleId;
 	private String name;
 	private String content;
+	private String articleId;
 
 	public String getArticleId() {
 		return articleId;

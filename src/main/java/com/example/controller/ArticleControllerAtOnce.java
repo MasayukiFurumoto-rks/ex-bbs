@@ -48,22 +48,22 @@ public class ArticleControllerAtOnce {
 		List<Comment> allCommentList = new ArrayList<>();
 		List<ArticleAndComment> domainList = atOnceRepository.findAllAsJoin();
 		
-		//domainからコメントをインスタンス化
-		for (ArticleAndComment domain2 : domainList) {
-			Comment comment = new Comment();
-			comment.setId(domain2.getComId());
-			comment.setName(domain2.getComName());
-			comment.setContent(domain2.getComContent());
-			comment.setArticleId(domain2.getArticleId());
+		//domainからコメントをインスタンス化、コメントはエンティティの数が
+		for (ArticleAndComment domain : domainList) {
+			Comment comment = new Comment();	
+			comment.setId(domain.getComId());
+			comment.setName(domain.getComName());
+			comment.setContent(domain.getComContent());
+			comment.setArticleId(domain.getArticleId());
 			allCommentList.add(comment);
 		}
 		
 		//domainから記事をインスタンス化
-		for (ArticleAndComment domain : domainList) {
+		for (ArticleAndComment domain2 : domainList) {
 			Article article = new Article();
-			article.setId(domain.getId());
-			article.setName(domain.getName());
-			article.setContent(domain.getContent());
+			article.setId(domain2.getId());
+			article.setName(domain2.getName());
+			article.setContent(domain2.getContent());
 
 			//全体のコメントリストのすべての中から、記事idが今の記事に等しいもののみをid別コメントリストに格納。
 			//そのコメントリストを今の記事に格納。
