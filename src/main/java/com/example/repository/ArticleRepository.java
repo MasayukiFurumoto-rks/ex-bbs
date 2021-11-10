@@ -41,11 +41,5 @@ public class ArticleRepository {
 		template.update(sql, param);
 	}
 
-	public List<Article> findAllAsJoin(){
-		String sql = "SELECT * FROM " + TABLE_NAME + " AS a LEFT JOIN comments AS c ON a.id = c.article_id ORDER BY a.id ASC";
-		return template.query(sql, ARTICLE_ROW_MAPPER);
-
-	}
-
 }
 
