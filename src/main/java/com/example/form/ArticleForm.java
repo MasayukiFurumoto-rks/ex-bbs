@@ -14,7 +14,7 @@ public class ArticleForm {
 	@Size(max=50,message="名前は50字以内で入力してください")
 	private String name;
 
-	@NotEmpty(message="内容を入力してください。")
+	@NotEmpty(message="記事内容を入力してください。")
 	private String content;
 	
 	public String getName() {

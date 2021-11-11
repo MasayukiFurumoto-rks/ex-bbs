@@ -35,30 +35,29 @@ public class ArticleControllerAtOnceBetter {
 
 	@Autowired
 	private ArticleRepository articleRepository;
-	
+
 	@Autowired
 	private CommentRepository commentRepository;
-	
+
 	@Autowired
 	private AtOnceRepositoryBetter atOnceRepositoryBetter;
 
 	@RequestMapping("")
 	public String indexAtOnceBetter(Model model) {
 		List<Article> articleList = atOnceRepositoryBetter.findAllAsJoin();
-		
+
 		model.addAttribute("articleList", articleList);
 
 		return "bbs-at-once-better";
 
 	}
-	
+
 	@RequestMapping("/insert-article")
-	public String insertArticle(@Validated ArticleForm form ,BindingResult result,Model model) {
-		System.out.println(result.hasErrors());
-		if(result.hasErrors()) {
+	public String insertArticle(@Validated ArticleForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
 			return indexAtOnceBetter(model);
 		}
-		
+
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleRepository.insert(article);
@@ -77,7 +76,11 @@ public class ArticleControllerAtOnceBetter {
 	}
 
 	@RequestMapping("/insert-comment")
-	public String insertComment(CommentForm form) {
+	public String insertComment(@Validated CommentForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return indexAtOnceBetter(model);
+		}
+		
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
 		comment.setArticleId(form.getIntArticleId());

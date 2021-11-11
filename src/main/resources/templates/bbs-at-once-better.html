@@ -43,10 +43,14 @@
 		</div>
 		<div class="comment-form">	
 			<form th:action="@{/ex-bbs-at-once-better/insert-comment}" th:object=${commentForm} method="post">
+				<div th:if="*{articleId}==${article.id}" th:errors="*{name}" style="color:red"></div>
 				<input type="hidden" th:name="articleId" th:value="${article.id}">
-				名前：<input type="text" th:field="*{name}"><br>
+				名前：<input type="text" name="name" th:if="*{articleId}==${article.id}" th:value="*{name}">
+					<input type="text" name="name" th:unless="*{articleId}==${article.id}"><br>
 				コメント：<br>
-				<textarea rows="5" cols="30" th:field="*{content}"></textarea><br>
+				<div th:if="*{articleId}==${article.id}" th:errors="*{content}" style="color:red"></div>
+				<textarea rows="5" cols="30" name="content" th:if="*{articleId}==${article.id}" th:value="*{content}"></textarea>
+				<textarea rows="5" cols="30" name="content"  th:unless="*{articleId}==${article.id}" ></textarea><br>
 				<button>コメント投稿</button>
 			</form>
 		</div>		

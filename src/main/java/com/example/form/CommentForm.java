@@ -1,7 +1,15 @@
 package com.example.form;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class CommentForm {
+
+	@NotEmpty(message="名前を入力してください。")
+	@Size(min=1,max=50,message="名前は50字以内で入力してください")
 	private String name;
+	
+	@NotEmpty(message="コメントを入力してください。")
 	private String content;
 	private String articleId;
 
