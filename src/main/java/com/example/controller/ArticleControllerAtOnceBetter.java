@@ -69,9 +69,6 @@ public class ArticleControllerAtOnceBetter {
 	public String deleteArticle(Integer id) {
 		articleRepository.delete(id);
 
-		// レポジトリではarticle_idとして受け取っています
-		commentRepository.delete(id);
-
 		return "redirect:/ex-bbs-at-once-better";
 	}
 

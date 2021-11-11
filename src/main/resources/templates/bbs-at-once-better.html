@@ -34,23 +34,26 @@
 			</div>
 			<div class="comment_content">
 				コメント内容：<br>
-				<pre><span th:text=${comment.content}></span></pre>
-<!-- 				<th:block th:if="${comment.content}" th:each="str, stat : ${comment.content.split('\r\n|\r|\n', -1)}"><th:block th:text="${str}"/> -->
-<!-- 				<br th:if="${!stat.last}"/> -->
-<!-- 				</th:block> -->
+<!-- 				<pre><span th:text=${comment.content}></span></pre> -->
+				<th:block th:if="${comment.content}" th:each="str, stat : ${comment.content.split('\r\n|\r|\n', -1)}"><th:block th:text="${str}"/>
+				<br th:if="${!stat.last}"/>
+				</th:block>
 			</div>
 			<br>
 		</div>
 		<div class="comment-form">	
 			<form th:action="@{/ex-bbs-at-once-better/insert-comment}" th:object=${commentForm} method="post">
-				<div th:if="*{articleId}==${article.id}" th:errors="*{name}" style="color:red"></div>
+				
 				<input type="hidden" th:name="articleId" th:value="${article.id}">
+
+				<div th:if="*{articleId}==${article.id}" th:errors="*{name}" style="color:red"></div>
 				名前：<input type="text" name="name" th:if="*{articleId}==${article.id}" th:value="*{name}">
-					<input type="text" name="name" th:unless="*{articleId}==${article.id}"><br>
-				コメント：<br>
+					<input type="text" name="name" th:unless="*{articleId}==${article.id}"	><br>
+				
 				<div th:if="*{articleId}==${article.id}" th:errors="*{content}" style="color:red"></div>
-				<textarea rows="5" cols="30" name="content" th:if="*{articleId}==${article.id}" th:value="*{content}"></textarea>
-				<textarea rows="5" cols="30" name="content"  th:unless="*{articleId}==${article.id}" ></textarea><br>
+				コメント：<br>
+				<textarea rows="5" cols="30" name="content" th:if="*{articleId}==${article.id}" th:text="*{content}"></textarea>
+				<textarea rows="5" cols="30" name="content" th:unless="*{articleId}==${article.id}"></textarea><br>
 				<button>コメント投稿</button>
 			</form>
 		</div>		

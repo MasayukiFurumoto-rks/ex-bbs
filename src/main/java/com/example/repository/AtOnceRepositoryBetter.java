@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -52,9 +51,9 @@ public class AtOnceRepositoryBetter {
 			}
 		}
 
-		if (map.size() == 0) {
-			throw new EmptyResultDataAccessException(1);
-		}
+//		if (map.size() == 0) {
+//			throw new EmptyResultDataAccessException(1);
+//		}
 
 		return new ArrayList<Article>(map.values());
 	};
