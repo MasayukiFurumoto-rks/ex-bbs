@@ -7,7 +7,9 @@
 <body>
 	<div class="article-form">
 		<form th:action="@{/ex-bbs-at-once-better/insert-article}" th:object=${articleForm} method="post">
+		<div th:errors="*{name}" style="color:red"></div>
 			投稿者名：<input type="text" th:field="*{name}"><br>
+		<div th:errors="*{content}" style="color:red"></div>
 			記事内容：<textarea rows="5" cols="30" th:field="*{content}"></textarea><br>
 			<button>記事投稿</button>
 		</form>

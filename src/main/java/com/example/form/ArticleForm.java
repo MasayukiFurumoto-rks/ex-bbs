@@ -1,5 +1,8 @@
 package com.example.form;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 /**
  * 記事についての投稿情報を受け取るフォームクラスです。<br>
  * 
@@ -7,9 +10,13 @@ package com.example.form;
  *
  */
 public class ArticleForm {
+	@NotEmpty(message="名前を入力してください。")
+	@Size(max=50,message="名前は50字以内で入力してください")
 	private String name;
-	private String content;
 
+	@NotEmpty(message="内容を入力してください。")
+	private String content;
+	
 	public String getName() {
 		return name;
 	}

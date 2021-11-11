@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -51,7 +53,12 @@ public class ArticleControllerAtOnceBetter {
 	}
 	
 	@RequestMapping("/insert-article")
-	public String insertArticle(ArticleForm form) {
+	public String insertArticle(@Validated ArticleForm form ,BindingResult result,Model model) {
+		System.out.println(result.hasErrors());
+		if(result.hasErrors()) {
+			return indexAtOnceBetter(model);
+		}
+		
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleRepository.insert(article);
